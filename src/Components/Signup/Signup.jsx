@@ -1,35 +1,25 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
 import { FirebaseContext } from '../../store/FirebaseContext';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import firebase from 'firebase/compat/app';
-import { useNavigate } from 'react-router-dom';
+import { signup } from '../../firebase/config';
 
 export default function Signup() {
-  
-  const history = useNavigate()
-
   const [Username, setUsername] = useState('');
   const [Email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [Password, setPassword] = useState('');
   const { auth } = useContext(FirebaseContext);
+  const navigate = useNavigate(); // For navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await createUserWithEmailAndPassword(auth, Email, Password);
-      await updateProfile(result.user, { displayName: Username }).then(()=>{
-       firebase.firestore().collection('user').add({
-        id:result.user.uid,
-        Username: Username,
-        phone:phone
-       }).then(()=>{
-          history('/')
-       }) 
-      });
-      console.log('User created:', result);
+      // Call the signup function
+      await signup(Username, Email, Password, phone);
+      // Redirect to login page after successful signup
+      navigate('/login');
     } catch (error) {
       console.error('Error signing up:', error.message);
     }

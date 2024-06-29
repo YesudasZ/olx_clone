@@ -4,25 +4,37 @@ import Logo from '../../olx-logo.png';
 import './Login.css';
 import { FirebaseContext } from '../../store/FirebaseContext';
 import { login } from '../../firebase/config';
+import { toast } from 'react-toastify';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // To display error messages
+  const [error, setError] = useState('');
   const { auth } = useContext(FirebaseContext);
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error message
+    setError('');
+    
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+
     try {
-      // Call the login function
-      await login(email, password);
-      // Redirect to home page after successful login
-      navigate('/');
+      const userCredential = await login(email, password);
+      const user = userCredential.user;
+      if (user) {
+        toast.success('Login successful!');
+        navigate('/');
+      } else {
+        setError('Invalid credentials');
+      }
     } catch (error) {
-      // Set error message
-      setError(error.message);
+      console.error('Login error:', error);
+      // setError('Invalid email or password. Please try again.');
+      // toast.error('Login failed. Please check your credentials.');
     }
   };
 
@@ -41,6 +53,7 @@ function Login() {
             id="email"
             name="email"
             placeholder="john@example.com"
+            required
           />
           <br />
           <label htmlFor="password">Password</label>
@@ -53,12 +66,13 @@ function Login() {
             id="password"
             name="password"
             placeholder="********"
+            required
           />
           <br />
           <br />
           <button type="submit">Login</button>
         </form>
-        {error && <p className="error">{error}</p>} {/* Display error message */}
+        {error && <p className="error">{error}</p>}
         <a href="/signup">Signup</a>
       </div>
     </div>

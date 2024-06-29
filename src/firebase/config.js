@@ -4,7 +4,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,  // Import updateProfile
+  updateProfile,  
 } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -42,7 +42,8 @@ const signup = async (name, email, password, phone) => {
 
 const login = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential;
   } catch (error) {
     console.log(error);
     toast.error(error.code.split('/')[1].split('-').join(" "));

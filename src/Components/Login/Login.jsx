@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../olx-logo.png';
 import './Login.css';
-import { FirebaseContext } from '../../store/FirebaseContext';
+import { AuthContext } from '../../store/Context';
 import { login } from '../../firebase/config';
 import { toast } from 'react-toastify';
 
@@ -10,7 +10,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { auth } = useContext(FirebaseContext);
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -33,8 +33,7 @@ function Login() {
       }
     } catch (error) {
       console.error('Login error:', error);
-      // setError('Invalid email or password. Please try again.');
-      // toast.error('Login failed. Please check your credentials.');
+
     }
   };
 

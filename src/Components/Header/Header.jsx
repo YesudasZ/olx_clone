@@ -1,12 +1,32 @@
-import React from 'react';
-
+import  { useContext } from 'react';
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import { AuthContext, FirebaseContext } from '../../store/Context';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../firebase/config'
+
+
+
 function Header() {
+  const { user, setUser } = useContext(AuthContext);
+  const {firebase} = useContext(FirebaseContext)
+  const navigate = useNavigate()
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null); 
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+
+  console.log("user log ",user);
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -34,9 +54,12 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>Login</span>
+          <span>{user?user.displayName:"Login"}</span>
           <hr />
         </div>
+        {user && (
+          <span onClick={handleLogout}>Logout</span>
+        )}
 
         <div className="sellMenu">
           <SellButton></SellButton>

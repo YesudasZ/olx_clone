@@ -5,15 +5,13 @@ import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
-import { AuthContext, FirebaseContext } from '../../store/Context';
+import { AuthContext} from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../firebase/config'
 
-
-
 function Header() {
   const { user, setUser } = useContext(AuthContext);
-  const {firebase} = useContext(FirebaseContext)
+
   const navigate = useNavigate()
   const handleLogout = async () => {
     try {

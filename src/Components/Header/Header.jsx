@@ -1,30 +1,33 @@
-import  { useContext } from 'react';
-import './Header.css';
-import OlxLogo from '../../assets/OlxLogo';
-import Search from '../../assets/Search';
-import Arrow from '../../assets/Arrow';
-import SellButton from '../../assets/SellButton';
-import SellButtonPlus from '../../assets/SellButtonPlus';
-import { AuthContext} from '../../store/Context';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../firebase/config'
+import { useContext } from "react";
+import "./Header.css";
+import OlxLogo from "../../assets/OlxLogo";
+import Search from "../../assets/Search";
+import Arrow from "../../assets/Arrow";
+import SellButton from "../../assets/SellButton";
+import SellButtonPlus from "../../assets/SellButtonPlus";
+import { AuthContext } from "../../store/Context";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../firebase/config";
 
 function Header() {
   const { user, setUser } = useContext(AuthContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await logout();
-      setUser(null); 
-      navigate('/login');
+      setUser(null);
+      navigate("/login");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
-  console.log("user log ",user);
+  console.log("user log ", user);
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -52,12 +55,16 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>{user?user.displayName:"Login"}</span>
+          {user ? (
+            <>
+              <span>{user.displayName}</span>
+            </>
+          ) : (
+            <span onClick={handleLogin}>Login</span>
+          )}
           <hr />
         </div>
-        {user && (
-          <span onClick={handleLogout}>Logout</span>
-        )}
+        {user && <span onClick={handleLogout}>Logout</span>}
 
         <div className="sellMenu">
           <SellButton></SellButton>

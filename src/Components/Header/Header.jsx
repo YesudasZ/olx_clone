@@ -27,6 +27,14 @@ function Header() {
     navigate("/login");
   };
 
+  const handleSell = ()=>{
+    if (user) {
+      navigate("/create")
+    }else{
+      navigate("/login")
+    }
+  }
+
   console.log("user log ", user);
   return (
     <div className="headerParentDiv">
@@ -70,7 +78,7 @@ function Header() {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span onClick={handleSell}>SELL</span>
           </div>
         </div>
       </div>

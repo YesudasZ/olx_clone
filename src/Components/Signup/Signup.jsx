@@ -39,7 +39,7 @@ export default function Signup() {
             onChange={(e) => setUsername(e.target.value)}
             id="fname"
             name="name"
-            placeholder="John"
+     
           />
           <br />
           <label htmlFor="email">Email</label>
@@ -51,7 +51,7 @@ export default function Signup() {
             onChange={(e) => setEmail(e.target.value)}
             id="email"
             name="email"
-            placeholder="john@example.com"
+    
           />
           <br />
           <label htmlFor="phone">Phone</label>
@@ -63,7 +63,7 @@ export default function Signup() {
             onChange={(e) => setPhone(e.target.value)}
             id="phone"
             name="phone"
-            placeholder="1234567890"
+
           />
           <br />
           <label htmlFor="password">Password</label>
@@ -74,9 +74,7 @@ export default function Signup() {
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
             id="password"
-            name="password"
-            placeholder="********"
-          />
+            name="password"         />
           <br />
           <br />
           <button type="submit">Signup</button>

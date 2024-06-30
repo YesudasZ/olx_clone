@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from './store/Context';
+import Create from './Components/Create/Create'
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -19,7 +20,9 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />}/>
+        <Route path="/create" element={ <Create />}/>
+
       </Routes>
     </div>
   );

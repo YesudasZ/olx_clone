@@ -1,40 +1,70 @@
 .bannerParentDiv {
   padding-top: 4em;
+  background-color: #f8f9fa; /* Light background color */
 }
-.bannerParentDiv .bannerChildDiv {
+
+.bannerChildDiv {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
-.bannerParentDiv .bannerChildDiv .menuBar {
+
+.menuBar {
   display: flex;
-  padding: 10px 16px 10px 16px;
+  padding: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar span {
+.categoryMenu {
+  display: flex;
+  align-items: center;
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu span {
+.categoryMenu span {
   margin-right: 16px;
   font-weight: bolder;
+  font-size: 18px;
+  color: #007bff; /* Primary color */
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions {
-}
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions span {
-  padding: 10px;
+.otherQuickOptions {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.bannerChildDiv .banner {
+.otherQuickOptions span {
+  font-size: 15px;
+  font-weight: 100;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #343a40; /* Darker color for better readability */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.otherQuickOptions span:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+.banner {
   position: relative;
-  width: 100vw;
+  width: 100%;
+  margin-top: 16px;
 }
-.bannerChildDiv .banner img{
-  width: 100vw;
+
+.banner_img {
+  width: 100%;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 @media only screen and (max-width: 700px) {
   .otherQuickOptions {
     display: none;
-  }
-  .bannerChildDiv .banner {
-    position: relative;
   }
 }

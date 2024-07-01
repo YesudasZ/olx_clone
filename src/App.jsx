@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from './store/Context';
 import Create from './Components/Create/Create'
+import View from './Pages/ViewPost'
+import Post from "./store/PostContext";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -17,13 +19,15 @@ function App() {
   return (
     <div>
       <ToastContainer />
+      <Post>
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />}/>
         <Route path="/create" element={ <Create />}/>
-
+        <Route path="/view" element={ <View />}/>
       </Routes>
+      </Post>
     </div>
   );
 }

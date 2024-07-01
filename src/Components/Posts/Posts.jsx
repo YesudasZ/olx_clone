@@ -2,24 +2,27 @@ import { useContext, useEffect, useState } from "react";
 import Heart from "../../assets/Heart";
 import "./Post.css";
 import { FirebaseContext } from "../../store/Context";
+import { collection, onSnapshot } from "firebase/firestore";
+import { PostContext } from "../../store/PostContext";
+import { useNavigate } from "react-router-dom";
 
 function Posts() {
-  // const { firebase } = useContext(FirebaseContext);
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   firebase
-  //     .firestore()
-  //     .collection("products")
-  //     .onSnapshot((snapshot) => {
-  //       const products = snapshot.docs.map((doc) => {
-  //         return {
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         };
-  //       });
-  //       setProducts(products);
-  //     });
-  // });
+  const { db } = useContext(FirebaseContext);
+  const [products, setProducts] = useState([]);
+  const { setPostDetails } = useContext(PostContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "products"), (snapshot) => {
+      const products = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(products);
+    });
+    return () => unsubscribe();
+  }, [db]);
+
   return (
     <div className="postParentDiv">
       <div className="moreView">
@@ -28,24 +31,31 @@ function Posts() {
           <span>View more</span>
         </div>
         <div className="cards">
-          {/* {products.map((product) => {
-      return      <div className="card">
+          {products.map((product) => (
+            <div
+              className="card"
+              onClick={() => {
+                setPostDetails(product);
+                navigate("/view");
+              }}
+              key={product.id}
+            >
               <div className="favorite">
-                <Heart></Heart>
+                <Heart />
               </div>
               <div className="image">
-                <img src="../../../Images/R15V3.jpg" alt="" />
+                <img src={product.image} alt="" />
               </div>
               <div className="content">
-                <p className="rate">&#x20B9; 250000</p>
-                <span className="kilometer">Two Wheeler</span>
-                <p className="name"> YAMAHA R15V3</p>
+                <p className="rate">&#x20B9; {product.price}</p>
+                <span className="kilometer">{product.category}</span>
+                <p className="name">{product.name}</p>
               </div>
               <div className="date">
-                <span>Tue May 04 2021</span>
+                <span>{product.createdAt}</span>
               </div>
-            </div>;
-          })} */}
+            </div>
+          ))}
         </div>
       </div>
       <div className="recommendations">

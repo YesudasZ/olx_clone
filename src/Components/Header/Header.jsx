@@ -35,11 +35,15 @@ function Header() {
     }
   }
 
+  const handleHome =()=>{
+    navigate("/")
+  }
+
   console.log("user log ", user);
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div className="brandName" onClick={handleHome}>
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
